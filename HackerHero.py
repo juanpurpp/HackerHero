@@ -105,13 +105,13 @@ while juego:
 			ventana.blit(textjuego, (800, 200))
 			txtjuego = fjuego.render(textorand, False, (51, 245, 66 ))
 			ventana.blit(txtjuego,(710, 330))
+			if validarletra(keys, textorand): 
+				textorand = randomtext(textorand)
 		for evento in pygame.event.get():
 			if evento.type == pygame.QUIT:
 				quit()
 			if(modo == juegoprincipal):
-				if validarletra(keys, textorand): 
-					textorand = randomtext(textorand)
-			print 
+				print 
 		#actualizacion del frame
 		# pygame.draw.rect(ventana,blanco, (350, 0, 300, 250)) #cuadrado de visulizacion rango de cama
 		pygame.display.update()

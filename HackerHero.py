@@ -102,7 +102,7 @@ while juego:
 				print("se alejo")
 		#juego principalp
 		if(modo == juegoprincipal):
-			print("hola")
+			print("edehola")
 			ventana.blit(textjuego, (800, 200))
 			txtjuego = fjuego.render(textorand, False, (51, 245, 66 ))
 			ventana.blit(txtjuego,(710, 330))

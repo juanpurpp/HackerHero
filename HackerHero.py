@@ -44,10 +44,10 @@ def formatomin(tiempo):
 	while(tiempo >= 1):
 		tiempo -= 1
 		seg+=1
-	if(minu < 10):
+	if(minu <10 and seg < 10):
+		res = "0%d: 0%d" % (minu,seg)
+	elif(minu < 10):
 		res = "0%d:%d" % (minu,seg)
-	elif(minu <10 and seg < 10):
-		res = "0%d:0%d" % (minu,seg)
 	elif(seg < 10):
 		res = "%d:0%d" %(minu, seg)
 	else: 

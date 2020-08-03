@@ -29,9 +29,31 @@ def inittime():
 	tiempopas.append(pygame.time.get_ticks())
 	return contid
 def gettime(idcont):
-	tiempof = pygame.time.get_ticks() - tiempopas[contid]
+	tiempof = pygame.time.get_ticks() - tiempopas[idcont]
 	return tiempof
-
+def formatomin(tiempo):
+	print("entra", tiempo)
+	tiempo = tiempo/1000
+	tiempo = int(round(tiempo, 0))
+	minu = 0
+	seg = 0
+	print("quedo ", tiempo)
+	while(tiempo >= 60):
+		tiempo -= 60
+		minu+=1
+	while(tiempo >= 1):
+		tiempo -= 1
+		seg+=1
+	if(minu < 10):
+		res = "0%d:%d" % (minu,seg)
+	elif(minu <10 and seg < 10):
+		res = "0%d:0%d" % (minu,seg)
+	elif(seg < 10):
+		res = "%d:0%d" %(minu, seg)
+	else: 
+		res = "%d:%d" %(minu, seg)
+	print("quedo", res)
+	return res
 
 blanco = (255, 255, 255 )
 negro = (0,0,0)
@@ -105,6 +127,9 @@ servidor = pygame.image.load('texturas/servidor.png')
 servidor2 = pygame.image.load('texturas/servidor.png')
 core = pygame.image.load('texturas/core.png')
 
+server1 = True;
+server2 = True;
+
 
 x = 0
 y = 30
@@ -142,8 +167,14 @@ while juego:
 					if(textotab == "crear ddos"):
 						if(puntos >= 400):
 							textdos = fletra.render("Colapsó un servidor", True, verde)
-							servidor = pygame.image.load('texturas/servidorno.png')
-							puntos -= 200
+							if server1 == True:
+								server1 = False	
+								servidor = pygame.image.load('texturas/servidorno.png')
+								puntos -= 200
+							else:
+								server2 = False
+								servidor2 = pygame.image.load('texturas/servidorno.png')
+								puntos -= 200
 						else:
 							textdos = fletra.render('Necesitas 400 pts', True, rojo)
 							fallo.play()
@@ -170,7 +201,6 @@ while juego:
 					elif(submodo == notab): 
 						submodo = tab
 						print("modo tab activeiro")
-
 		if(modo == prejuego):
 			leti = 0
 			#movimiento jugador
@@ -201,6 +231,7 @@ while juego:
 					puntos = 0
 					sonentrar.play()
 					pygame.mixer.music.play(-1)
+					contador = inittime()
 					print("pasaron", gettime(tiempoprueba), "desde el inicio\n\n\n")
 
 			else:
@@ -239,6 +270,9 @@ while juego:
 			ventana.blit(txtjuego,(680, 320))
 			textopuntos = 'pts: %d' % puntos 
 			txtpuntos = fpuntos.render(textopuntos, True, blanco)
+			timecont = formatomin(gettime(contador))
+			txtcont = fmsg.render(timecont, True, blanco)
+			ventana.blit(txtcont, (1000, 50))
 			ventana.blit(txtmsg, (700, 200))
 			ventana.blit(txtpuntos, (1100,110))
 			ventana.blit(servidor, (100, 20))

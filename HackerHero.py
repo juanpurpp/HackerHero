@@ -135,6 +135,7 @@ server2 = True;
 
 x = 0
 y = 30
+ganadas = 0
 os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (x,y)
 ventana = pygame.display.set_mode((vx, vy))
 pygame.display.set_caption("WENAAA")
@@ -147,6 +148,9 @@ textotab = ''
 encendido = inittime()
 sonentrar.play()
 while juego:
+	textorand = ' '
+	letra = ' '
+	textotab = ''
 	jugando = True
 	while jugando:
 		reloj.tick(50)
@@ -164,7 +168,7 @@ while juego:
 						print(textotab)
 				elif(evento.key == 8):
 						textotab = textotab[:-1]
-				if evento.key == 13 and submodo == tab:
+				if evento.key == 13 and submodo == tab and modo == juegoprincipal:
 					if(textotab == "puntosxd"): puntos += 500
 					if(textotab == "crear ddos"):
 						if(server2 == False):
@@ -206,6 +210,7 @@ while juego:
 					if server1 == False and server2 == False and proce == False:
 						modo = finb
 						contfin = inittime()
+						ganadas+=1
 						fondo = pygame.image.load('texturas/ganar.png')
 					textotab = ''
 				print("guardando ", letra )
@@ -243,6 +248,10 @@ while juego:
 				if keys[pygame. K_RETURN ]:
 					modo = juegoprincipal
 					fondo = pygame.image.load('texturas/computadores.png')
+					servidor = pygame.image.load('texturas/servidor.png')
+					servidor2 = pygame.image.load('texturas/servidor.png')
+					core = pygame.image.load('texturas/core.png')
+					textdos = fmsg.render(" ", True, rojo)
 					textorand = ''
 					textorand = randomtext(textorand)
 					puntos = 0
@@ -253,6 +262,12 @@ while juego:
 					pygame.mixer.music.play(-1)
 					contador = inittime()
 					print("pasaron", gettime(tiempoprueba), "desde el inicio\n\n\n")
+					if(ganadas == 0):
+						jefe = pygame.image.load('texturas/jefe1.png')
+					elif(ganadas == 1):
+						jefe = pygame.image.load('texturas/jefe2.png')
+					elif(ganadas >= 2):
+						jefe = pygame.image.load('texturas/jefe3.png')
 
 			else:
 				print("se alejo")
@@ -303,9 +318,10 @@ while juego:
 			ventana.blit(txtcont, (1000, 50))
 			ventana.blit(txtmsg, (700, 200))
 			ventana.blit(txtpuntos, (1100,110))
-			ventana.blit(servidor, (100, 20))
-			ventana.blit(core, (300, 20))
-			ventana.blit(servidor2, (500, 20))
+			ventana.blit(servidor, (15, 20))
+			ventana.blit(core, (215, 20))
+			ventana.blit(servidor2, (415, 20))
+			ventana.blit(jefe, (600,20))
 		if(modo == finb):
 			jug_y = 500
 			jug_x = 900

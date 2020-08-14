@@ -96,6 +96,8 @@ cancion = pygame.mixer.music.load("musica/cancionmodelo.mp3")
 #caracteristicas de objetos
 prejuego = 1
 juegoprincipal = 2
+finb = 3
+finm = 4
 modo = 1
 
 tab = 2
@@ -155,7 +157,7 @@ while juego:
 			if evento.type == pygame.QUIT:
 				quit()
 			if evento.type == pygame.KEYDOWN:
-				if((evento.key > 65 and evento.key < 125) or evento.key == 32):
+				if((evento.key > 65 and evento.key < 125) or evento.key == 32) and len(textotab) <= 23:
 					letra = chr(evento.key)
 					if submodo == tab:
 						textotab+= chr(evento.key)
@@ -165,7 +167,9 @@ while juego:
 				if evento.key == 13 and submodo == tab:
 					if(textotab == "puntosxd"): puntos += 500
 					if(textotab == "crear ddos"):
-						if(puntos >= 400):
+						if(server2 == False):
+							textdos = fletra.render("Ya murieron 2 servidores", True, rojo)
+						elif(puntos >= 400):
 							textdos = fletra.render("Colapsó un servidor", True, verde)
 							if server1 == True:
 								server1 = False	
@@ -179,18 +183,30 @@ while juego:
 							textdos = fletra.render('Necesitas 400 pts', True, rojo)
 							fallo.play()
 					elif(textotab == "crear virus"):
-						if(puntos >= 700):
+						if(proce == False):
+							textdos = fletra.render("Ya creó un virus", True, rojo)
+						elif(puntos >= 700):
 							textdos = fletra.render("Destruyó un core", True, verde)
 							core = pygame.image.load('texturas/coreno.png')
 							puntos -= 500
+							proce = False
+						else: 
+							textdos = fletra.render("Necesitas 700 pts", True, rojo)
+							fallo.play()
+					elif(textotab == "ola mundo"):
+						if(puntos >= 0):
+							textdos = fletra.render("ola mundo XD", True, verde)
+							puntos += 5000
 						else: 
 							textdos = fletra.render("Necesitas 700 pts", True, rojo)
 							fallo.play()
 					else:
 						textdos = fletra.render("No se encontró comando", True, rojo)
 						fallo.play()
-
-				
+					if server1 == False and server2 == False and proce == False:
+						modo = finb
+						contfin = inittime()
+						fondo = pygame.image.load('texturas/ganar.png')
 					textotab = ''
 				print("guardando ", letra )
 				if(evento.key == 9):
@@ -201,6 +217,7 @@ while juego:
 					elif(submodo == notab): 
 						submodo = tab
 						print("modo tab activeiro")
+
 		if(modo == prejuego):
 			leti = 0
 			#movimiento jugador
@@ -229,6 +246,9 @@ while juego:
 					textorand = ''
 					textorand = randomtext(textorand)
 					puntos = 0
+					server1 = True
+					server2 = True
+					proce = True
 					sonentrar.play()
 					pygame.mixer.music.play(-1)
 					contador = inittime()
@@ -238,6 +258,12 @@ while juego:
 				print("se alejo")
 		#juego principalp
 		if(modo == juegoprincipal):
+			if gettime(contador) >= (60*1000)*2:
+				jug_x = 1000
+				jug_y = 400
+				fondo = pygame.image.load('texturas/perder.png')
+				modo = finb
+				contfin = inittime()
 			longtext = len(textorand)
 			#modo notab
 			if(submodo == notab):
@@ -258,6 +284,7 @@ while juego:
 				textmostrar = fput.render(textotab, True, verde)
 				ventana.blit(textmostrar, (148, 325))
 				ventana.blit(textdos, (150, 360))
+			#tiempo partida
 			ton = gettime(encendido)
 			if ton >= 0  and ton < 500:
 				if submodo == tab:
@@ -266,6 +293,7 @@ while juego:
 					ventana.blit(textoput,(700, 370))
 			elif ton >= 1000:
 				encendido = inittime()
+			#impresiones
 			txtjuego = fjuego.render(textorand, True, verde)
 			ventana.blit(txtjuego,(680, 320))
 			textopuntos = 'pts: %d' % puntos 
@@ -278,7 +306,14 @@ while juego:
 			ventana.blit(servidor, (100, 20))
 			ventana.blit(core, (300, 20))
 			ventana.blit(servidor2, (500, 20))
-
+		if(modo == finb):
+			jug_y = 500
+			jug_x = 900
+			print("pasaron", gettime(contfin), "de la wea" )
+			if(gettime(contfin) >= 3000):
+				fondo = pygame.image.load('texturas/habitacion.png')
+				modo = prejuego
+				jugando = False
 		#actualizacion del frame
 		# pygame.draw.rect(ventana,blanco, (350, 0, 300, 250)) #cuadrado de visulizacion de ayuda
 		pygame.display.update()

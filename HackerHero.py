@@ -147,6 +147,7 @@ letra = ' '
 textotab = ''
 encendido = inittime()
 sonentrar.play()
+txtmsg = pygame.image.load('texturas/nada.png')
 while juego:
 	textorand = ' '
 	letra = ' '
@@ -175,6 +176,7 @@ while juego:
 							textdos = fletra.render("Ya murieron 2 servidores", True, rojo)
 						elif(puntos >= 400):
 							textdos = fletra.render("Colapsó un servidor", True, verde)
+							txtmsg = pygame.image.load('texturas/txtddos.png')
 							if server1 == True:
 								server1 = False	
 								servidor = pygame.image.load('texturas/servidorno.png')
@@ -191,6 +193,7 @@ while juego:
 							textdos = fletra.render("Ya creó un virus", True, rojo)
 						elif(puntos >= 700):
 							textdos = fletra.render("Destruyó un core", True, verde)
+							txtmsg = pygame.image.load('texturas/txtvirus.png')
 							core = pygame.image.load('texturas/coreno.png')
 							puntos -= 500
 							proce = False
@@ -251,6 +254,7 @@ while juego:
 					servidor = pygame.image.load('texturas/servidor.png')
 					servidor2 = pygame.image.load('texturas/servidor.png')
 					core = pygame.image.load('texturas/core.png')
+					txtmsg = pygame.image.load('texturas/nada.png')
 					textdos = fmsg.render(" ", True, rojo)
 					textorand = ''
 					textorand = randomtext(textorand)
@@ -284,12 +288,13 @@ while juego:
 			if(submodo == notab):
 				if validarletra(keys, textorand):
 					if (textorand.lower()[longtext-2] == textorand.lower()[longtext-1] ) and longtext >1:
-						puntos += 50
+						puntos += 100
 						txtmsg = fmsg.render('Ha conseguido un doble y sumar 50 pts', True, (0, 0, 0))
+						txtmsg = pygame.image.load('texturas/txtdoble.png')
 					textorand = randomtext(textorand)
 				if(longtext > 27): #revisar si completo una linea
-					puntos += 200	
-					txtmsg = fmsg.render('ha logrado decifrar un paquete de datos', True, (0, 0, 0))
+					puntos += 300
+					txtmsg = pygame.image.load('texturas/txtdeco.png')
 					textorand = ' '
 					textorand = randomtext(textorand)
 				textoletra = fletra.render(letra, True, verde)
@@ -310,18 +315,19 @@ while juego:
 				encendido = inittime()
 			#impresiones
 			txtjuego = fjuego.render(textorand, True, verde)
+
 			ventana.blit(txtjuego,(680, 320))
 			textopuntos = 'pts: %d' % puntos 
 			txtpuntos = fpuntos.render(textopuntos, True, blanco)
 			timecont = formatomin(gettime(contador))
 			txtcont = fmsg.render(timecont, True, blanco)
-			ventana.blit(txtcont, (1000, 50))
-			ventana.blit(txtmsg, (700, 200))
-			ventana.blit(txtpuntos, (1100,110))
-			ventana.blit(servidor, (15, 20))
-			ventana.blit(core, (215, 20))
-			ventana.blit(servidor2, (415, 20))
 			ventana.blit(jefe, (600,20))
+			ventana.blit(txtcont, (1180, 50))
+			ventana.blit(txtmsg, (680, 230))
+			ventana.blit(txtpuntos, (1180,110))
+			ventana.blit(servidor, (0, 20))
+			ventana.blit(core, (150, 20))
+			ventana.blit(servidor2, (300, 20))
 		if(modo == finb):
 			jug_y = 500
 			jug_x = 900
@@ -329,6 +335,7 @@ while juego:
 			if(gettime(contfin) >= 3000):
 				fondo = pygame.image.load('texturas/habitacion.png')
 				modo = prejuego
+				pygame.mixer.music.stop()
 				jugando = False
 		#actualizacion del frame
 		# pygame.draw.rect(ventana,blanco, (350, 0, 300, 250)) #cuadrado de visulizacion de ayuda

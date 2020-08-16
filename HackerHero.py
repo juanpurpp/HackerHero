@@ -1,5 +1,10 @@
 import pygame, os, math, random, string
 
+#Videojuego creado por
+	#Juan Sandoval
+	#Francisco Monsalve
+	#Yonatan Velasquez
+	#Gabriel Gallardo
 
 acierto = False
 contid= 0
@@ -189,10 +194,10 @@ while juego:
 						if(server2 == False):
 							textdos = fletra.render("Ya murieron 2 servidores", True, rojo)
 						elif(puntos >= 200):
-							if(gettime(contador) - 20000) < 0:
+							if(gettime(contador) - 10000) < 0:
 								adtime(contador, -gettime(contador))
 							else:
-								adtime(contador, -20000)
+								adtime(contador, -10000)
 							textdos = fletra.render("Colapsó un servidor", True, verde)
 							txtmsg = pygame.image.load('texturas/txtddos.png')
 							if server1 == True:
@@ -227,9 +232,9 @@ while juego:
 							else:
 								for i in range(5):
 									textorand = randomtext(textorand)
+							puntos -= 100
 						else:
 							textdos = fletra.render("Necesitas 100 bitcoin", True, rojo)
-							puntos -= 100
 					elif(textotab == "ola mundo"):
 						if(puntos >= 0):
 							textdos = fletra.render("ola mundo XD", True, verde)

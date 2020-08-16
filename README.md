@@ -13,3 +13,4 @@ Profesores: Cristian Vallejos
             Joel Torres
             
 En HackerHero eres un hacker que se levanta un día con ganas de hackear a las personas que controlan un mundo, se pone en su computador con 3 objetivos, Bill "shoro" Gates, la CIA y los shoros de la ULA 69 GANG. ¿Podrá derrotarlos?.
+

@@ -143,7 +143,7 @@ y = 30
 ganadas = 0
 os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (x,y)
 ventana = pygame.display.set_mode((vx, vy))
-pygame.display.set_caption("WENAAA")
+pygame.display.set_caption("HackerHero")
 tiempoprueba = inittime()
 reloj = pygame.time.Clock()
 juego = True

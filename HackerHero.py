@@ -31,6 +31,8 @@ def inittime():
 def gettime(idcont):
 	tiempof = pygame.time.get_ticks() - tiempopas[idcont]
 	return tiempof
+def adtime(idcont, tiempo):
+	tiempopas[idcont] -= tiempo
 def formatomin(tiempo):
 	print("entra", tiempo)
 	tiempo = tiempo/1000
@@ -79,7 +81,8 @@ textdos = fconsola.render('', True, rojo)
 fput = pygame.font.SysFont('Consolas', 30)
 fletra= pygame.font.SysFont('Consolas', 30)
 textoput = fput.render('>', True, verde)
-#texto tab
+#texto ayda
+txthelp = pygame.image.load('texturas/txtapret.png')
 
 #texto juegil
 fjuego = pygame.font.SysFont('Consolas', 30)
@@ -134,7 +137,7 @@ core = pygame.image.load('texturas/core.png')
 server1 = True;
 server2 = True;
 
-
+bitcoin = pygame.image.load('texturas/bitcoin.png')
 x = 0
 y = 30
 ganadas = 0
@@ -150,11 +153,14 @@ textotab = ''
 encendido = inittime()
 sonentrar.play()
 txtmsg = pygame.image.load('texturas/nada.png')
+libro = pygame.image.load('texturas/libro.png')
 while juego:
 	textorand = ' '
 	letra = ' '
 	textotab = ''
 	jugando = True
+	ayuda = False
+	control = False
 	while jugando:
 		reloj.tick(50)
 		ventana.blit(fondo, (0,0))
@@ -171,12 +177,22 @@ while juego:
 						print(textotab)
 				elif(evento.key == 8):
 						textotab = textotab[:-1]
+				if evento.key == 27:
+					print('presiona esta wea')
+					if ayuda:
+						ayuda = False
+					else:
+						ayuda = True
 				if evento.key == 13 and submodo == tab and modo == juegoprincipal:
 					if(textotab == "puntosxd"): puntos += 500
 					if(textotab == "crear ddos"):
 						if(server2 == False):
 							textdos = fletra.render("Ya murieron 2 servidores", True, rojo)
-						elif(puntos >= 400):
+						elif(puntos >= 200):
+							if(gettime(contador) - 20000) < 0:
+								adtime(contador, -gettime(contador))
+							else:
+								adtime(contador, -20000)
 							textdos = fletra.render("Colapsó un servidor", True, verde)
 							txtmsg = pygame.image.load('texturas/txtddos.png')
 							if server1 == True:
@@ -188,20 +204,32 @@ while juego:
 								servidor2 = pygame.image.load('texturas/servidorno.png')
 								puntos -= 200
 						else:
-							textdos = fletra.render('Necesitas 400 pts', True, rojo)
+							textdos = fletra.render('Necesitas 200 bitcoin', True, rojo)
 							fallo.play()
 					elif(textotab == "crear virus"):
 						if(proce == False):
 							textdos = fletra.render("Ya creó un virus", True, rojo)
-						elif(puntos >= 700):
+						elif(puntos >= 500):
 							textdos = fletra.render("Destruyó un core", True, verde)
 							txtmsg = pygame.image.load('texturas/txtvirus.png')
 							core = pygame.image.load('texturas/coreno.png')
 							puntos -= 500
 							proce = False
 						else: 
-							textdos = fletra.render("Necesitas 700 pts", True, rojo)
+							textdos = fletra.render("Necesitas 500 pts", True, rojo)
 							fallo.play()
+					elif(textotab == "overclock true"):
+						if(puntos>= 100):
+							txtmsg = pygame.image.load('texturas/txtover.png')
+							if len(textorand ) + 5 > 27:  
+								for i in range(27 - len(textorand)): 
+									textorand = randomtext(textorand)
+							else:
+								for i in range(5):
+									textorand = randomtext(textorand)
+						else:
+							textdos = fletra.render("Necesitas 100 bitcoin", True, rojo)
+							puntos -= 100
 					elif(textotab == "ola mundo"):
 						if(puntos >= 0):
 							textdos = fletra.render("ola mundo XD", True, verde)
@@ -246,6 +274,7 @@ while juego:
 				jug_png = pygame.image.load("texturas/jugadorfrente.png")
 			#render jugador
 			ventana.blit(jug_png,(jug_x, jug_y))
+			ventana.blit(txthelp, (200, 600))
 			#jugador en computadora
 			if rangode(comp_x, comp_y, jug_x, jug_y) < 150:
 				print("loco serca xd")
@@ -258,6 +287,12 @@ while juego:
 					servidor2 = pygame.image.load('texturas/servidor.png')
 					core = pygame.image.load('texturas/core.png')
 					txtmsg = pygame.image.load('texturas/nada.png')
+					if(ganadas == 0):
+						nivel = pygame.image.load('texturas/txtnivel1.png')
+					if(ganadas == 1):
+						nivel = pygame.image.load('texturas/txtnivel2.png')
+					if(ganadas == 2):
+						nivel = pygame.image.load('texturas/txtnivel3.png')
 					textdos = fmsg.render(" ", True, rojo)
 					textorand = ''
 					textorand = randomtext(textorand)
@@ -280,7 +315,7 @@ while juego:
 				print("se alejo")
 		#juego principalp
 		if(modo == juegoprincipal):
-			if gettime(contador) >= (60*1000)*2:
+			if (gettime(contador) >= (60*1000)*2 and ganadas == 0) or (gettime(contador) >= (60*1000)*1 + 30*1000 and ganadas == 1) or (gettime(contador) >= (60*1000) and ganadas >= 2):
 				jug_x = 1000
 				jug_y = 400
 				fondo = pygame.image.load('texturas/perder.png')
@@ -321,7 +356,7 @@ while juego:
 			txtjuego = fjuego.render(textorand, True, verde)
 
 			ventana.blit(txtjuego,(680, 320))
-			textopuntos = 'pts: %d' % puntos 
+			textopuntos = '   : %d' % puntos 
 			txtpuntos = fpuntos.render(textopuntos, True, blanco)
 			timecont = formatomin(gettime(contador))
 			txtcont = fmsg.render(timecont, True, blanco)
@@ -332,6 +367,8 @@ while juego:
 			ventana.blit(servidor, (0, 20))
 			ventana.blit(core, (150, 20))
 			ventana.blit(servidor2, (300, 20))
+			ventana.blit(bitcoin, (1152, 96))
+			ventana.blit(nivel, (100, 600))
 		if(modo == finb):
 			pygame.mixer.music.stop()	
 			jug_y = 500
@@ -341,6 +378,8 @@ while juego:
 				fondo = pygame.image.load('texturas/habitacion.png')
 				modo = prejuego
 				jugando = False
+		if ayuda:
+			ventana.blit(libro, (0,0))
 		#actualizacion del frame
 		# pygame.draw.rect(ventana,blanco, (350, 0, 300, 250)) #cuadrado de visulizacion de ayuda
 		pygame.display.update()

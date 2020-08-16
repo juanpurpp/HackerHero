@@ -92,6 +92,8 @@ pygame.init()
 
 sonentrar = pygame.mixer.Sound('musica/audioentrar.ogg')
 fallo = pygame.mixer.Sound('musica/fallo.ogg')
+perder = pygame.mixer.Sound('musica/perder.ogg')
+ganar = pygame.mixer.Sound('musica/ganar.ogg')
 cancion = pygame.mixer.music.load("musica/cancionmodelo.mp3")
 #caracteristicas de objetos
 prejuego = 1
@@ -215,6 +217,7 @@ while juego:
 						contfin = inittime()
 						ganadas+=1
 						fondo = pygame.image.load('texturas/ganar.png')
+						ganar.play()
 					textotab = ''
 				print("guardando ", letra )
 				if(evento.key == 9):
@@ -250,7 +253,7 @@ while juego:
 
 				if keys[pygame. K_RETURN ]:
 					modo = juegoprincipal
-					fondo = pygame.image.load('texturas/computadores.png')
+					fondo = pygame.image.load('texturas/computadores.png') 
 					servidor = pygame.image.load('texturas/servidor.png')
 					servidor2 = pygame.image.load('texturas/servidor.png')
 					core = pygame.image.load('texturas/core.png')
@@ -281,6 +284,7 @@ while juego:
 				jug_x = 1000
 				jug_y = 400
 				fondo = pygame.image.load('texturas/perder.png')
+				perder.play()
 				modo = finb
 				contfin = inittime()
 			longtext = len(textorand)
@@ -329,13 +333,13 @@ while juego:
 			ventana.blit(core, (150, 20))
 			ventana.blit(servidor2, (300, 20))
 		if(modo == finb):
+			pygame.mixer.music.stop()	
 			jug_y = 500
 			jug_x = 900
 			print("pasaron", gettime(contfin), "de la wea" )
-			if(gettime(contfin) >= 3000):
+			if(gettime(contfin) >= 4000):
 				fondo = pygame.image.load('texturas/habitacion.png')
 				modo = prejuego
-				pygame.mixer.music.stop()
 				jugando = False
 		#actualizacion del frame
 		# pygame.draw.rect(ventana,blanco, (350, 0, 300, 250)) #cuadrado de visulizacion de ayuda

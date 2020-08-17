@@ -183,7 +183,7 @@ while juego:
 				elif(evento.key == 8):
 						textotab = textotab[:-1]
 				if evento.key == 27:
-					print('presiona esta wea')
+					print('presiona esto')
 					if ayuda:
 						ayuda = False
 					else:
@@ -260,7 +260,7 @@ while juego:
 						textotab = ''
 					elif(submodo == notab): 
 						submodo = tab
-						print("modo tab activeiro")
+						print("modo tab activado")
 
 		if(modo == prejuego):
 			leti = 0
@@ -282,7 +282,7 @@ while juego:
 			ventana.blit(txthelp, (200, 600))
 			#jugador en computadora
 			if rangode(comp_x, comp_y, jug_x, jug_y) < 150:
-				print("loco serca xd")
+				print("cerca del objetivo")
 				ventana.blit(inittxt, (0, 0)) #texto de iniciar juego
 
 				if keys[pygame. K_RETURN ]:
